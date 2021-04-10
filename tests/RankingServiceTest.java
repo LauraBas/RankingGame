@@ -7,11 +7,11 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-class ScoresTest {
+class RankingServiceTest {
 
     @Test
     void shouldSaveUserTotalScore() {
-        Scores s = new Scores();
+        RankingService s = new RankingService();
         s.setUserScore("123", "120");
         s.setUserScore("124", "150");
         Assertions.assertEquals(120, s.getAbsolutScores("123"));
@@ -20,7 +20,7 @@ class ScoresTest {
 
     @Test
     void shouldSaveUserRelativeScore() {
-        Scores s = new Scores();
+        RankingService s = new RankingService();
         s.setUserScore("123", "120");
         s.setUserScore("123", "-20");
         s.setUserScore("123", "+30");
@@ -29,7 +29,7 @@ class ScoresTest {
 
     @Test
     void shouldReturnAbsolutesRankings() {
-        Scores s = new Scores();
+        RankingService s = new RankingService();
         s.setUserScore("123", "120");
         s.setUserScore("124", "130");
         s.setUserScore("125", "140");

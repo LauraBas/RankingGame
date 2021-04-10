@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Scores {
+public class RankingService {
 
     HashMap<String, Integer> scores_dict = new HashMap<String, Integer>();
 
