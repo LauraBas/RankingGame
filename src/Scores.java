@@ -1,14 +1,14 @@
-import java.util.Hashtable;
+import java.util.*;
 
 public class Scores {
 
-    Hashtable<String, Integer> scores_dict = new Hashtable<String, Integer>();
+    HashMap<String, Integer> scores_dict = new HashMap<String, Integer>();
 
     public void setUserScore(String user, String points) {
         if (userExists(user)) {
             int actualUserPoints = scores_dict.get(user);
             int num = Math.abs(Integer.parseInt(points));
-            if (isSubstraction(points)) {
+            if (isSubtraction(points)) {
                 int score = actualUserPoints - num;
                 scores_dict.put(user, score);
             } else if (isSum(points)) {
@@ -27,7 +27,7 @@ public class Scores {
         return Character.compare(points.charAt(0), '+') == 0;
     }
 
-    private boolean isSubstraction(String points) {
+    private boolean isSubtraction(String points) {
         return Character.compare(points.charAt(0), '-') == 0;
     }
 
@@ -37,5 +37,19 @@ public class Scores {
 
     public int getAbsolutScores(String user) {
        return scores_dict.get(user);
+    }
+
+    public List<User> getAbsolutesRanking(int i) {
+        List<User> usersSortByScore = new ArrayList<>();
+        scores_dict.forEach((user, score) -> usersSortByScore.add(new User(user, score)));
+        usersSortByScore.sort(Comparator.comparing(User::getScore).reversed());
+
+        List<User> rankings = new ArrayList<>();
+        int n = 0;
+        while (n < i) {
+            rankings.add( usersSortByScore.get(n));
+            n++;
+        }
+        return rankings;
     }
 }
