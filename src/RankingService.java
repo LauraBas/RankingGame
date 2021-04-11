@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class RankingService {
 
@@ -40,9 +41,7 @@ public class RankingService {
     }
 
     public List<User> getAbsolutesRanking(int i) {
-        List<User> usersSortByScore = new ArrayList<>();
-        scores_dict.forEach((user, score) -> usersSortByScore.add(new User(user, score)));
-        usersSortByScore.sort(Comparator.comparing(User::getScore).reversed());
+        List<User> usersSortByScore = getSortedScores();
 
         List<User> rankings = new ArrayList<>();
         int n = 0;
@@ -51,5 +50,38 @@ public class RankingService {
             n++;
         }
         return rankings;
+    }
+
+    public List<User> getRelativeRanking(String s) {
+        String[] result = s.split(Pattern.quote("/"));
+        int points = Integer.parseInt(result[0]);
+        int range = Integer.parseInt(result[1]);
+        List<User> usersSortByScore = getSortedScores();
+        List<User> rankings = new ArrayList<>();
+
+        for (int i = 0; i < usersSortByScore.size(); i++) {
+            if (usersSortByScore.get(i).getScore() == points) {
+                rankings.add(usersSortByScore.get(i));
+                while (range > 0) {
+                    if (i + range < usersSortByScore.size()) {
+                        rankings.add(usersSortByScore.get(i + range));
+                    }
+                    if (i - range >= 0) {
+                        rankings.add(usersSortByScore.get(i - range));
+                    }
+                    range--;
+                }
+                rankings.sort(Comparator.comparing(User::getScore));
+                return rankings;
+            }
+        }
+        return rankings;
+    }
+
+    private List<User> getSortedScores() {
+        List<User> usersSortByScore = new ArrayList<>();
+        scores_dict.forEach((user, score) -> usersSortByScore.add(new User(user, score)));
+        usersSortByScore.sort(Comparator.comparing(User::getScore).reversed());
+        return usersSortByScore;
     }
 }
