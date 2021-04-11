@@ -11,35 +11,35 @@ class RankingServiceTest {
 
     @Test
     void shouldSaveUserTotalScore() {
-        RankingService s = new RankingService();
-        s.setUserScore("123", "120");
-        s.setUserScore("124", "150");
-        Assertions.assertEquals(120, s.getAbsolutScores("123"));
-        Assertions.assertEquals(150, s.getAbsolutScores("124"));
+        RankingService rankingService = new RankingService();
+        rankingService.setUserScore("123", "120");
+        rankingService.setUserScore("124", "150");
+        Assertions.assertEquals(120, rankingService.getAbsolutScores("123"));
+        Assertions.assertEquals(150, rankingService.getAbsolutScores("124"));
     }
 
     @Test
     void shouldSaveUserRelativeScore() {
-        RankingService s = new RankingService();
-        s.setUserScore("123", "120");
-        s.setUserScore("123", "-20");
-        s.setUserScore("123", "+30");
-        Assertions.assertEquals(130, s.getAbsolutScores("123"));
+        RankingService rankingService = new RankingService();
+        rankingService.setUserScore("123", "120");
+        rankingService.setUserScore("123", "-20");
+        rankingService.setUserScore("123", "+30");
+        Assertions.assertEquals(130, rankingService.getAbsolutScores("123"));
     }
 
     @Test
     void shouldReturnAbsolutesRankings() {
-        RankingService s = new RankingService();
-        s.setUserScore("123", "120");
-        s.setUserScore("124", "130");
-        s.setUserScore("125", "140");
-        s.setUserScore("126", "100");
+        RankingService rankingService = new RankingService();
+        rankingService.setUserScore("123", "120");
+        rankingService.setUserScore("124", "130");
+        rankingService.setUserScore("125", "140");
+        rankingService.setUserScore("126", "100");
 
         List<User> expected = new ArrayList<>();
         expected.add(new User("125", 140));
         expected.add(new User("124", 130));
         expected.add(new User("123", 120));
-        assertThat(s.getAbsolutesRanking(3), is(expected));
+        assertThat(rankingService.getAbsolutesRanking(3), is(expected));
     }
 
 }
