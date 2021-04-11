@@ -3,7 +3,7 @@ import java.util.regex.Pattern;
 
 public class RankingService {
 
-    HashMap<String, Integer> scores_dict = new HashMap<String, Integer>();
+    HashMap<String, Integer> scores_dict = new HashMap<>();
 
     public void setUserScore(String user, String points) {
         if (userExists(user)) {
@@ -25,11 +25,11 @@ public class RankingService {
     }
 
     private boolean isSum(String points) {
-        return Character.compare(points.charAt(0), '+') == 0;
+        return points.charAt(0) == '+';
     }
 
     private boolean isSubtraction(String points) {
-        return Character.compare(points.charAt(0), '-') == 0;
+        return points.charAt(0) == '-';
     }
 
     private boolean userExists(String user) {
