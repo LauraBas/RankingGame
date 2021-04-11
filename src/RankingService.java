@@ -62,20 +62,24 @@ public class RankingService {
         for (int i = 0; i < usersSortByScore.size(); i++) {
             if (usersSortByScore.get(i).getScore() == points) {
                 rankings.add(usersSortByScore.get(i));
-                while (range > 0) {
-                    if (i + range < usersSortByScore.size()) {
-                        rankings.add(usersSortByScore.get(i + range));
-                    }
-                    if (i - range >= 0) {
-                        rankings.add(usersSortByScore.get(i - range));
-                    }
-                    range--;
-                }
+                addRankingInRange(range, usersSortByScore, rankings, i);
                 rankings.sort(Comparator.comparing(User::getScore));
                 return rankings;
             }
         }
         return rankings;
+    }
+
+    private void addRankingInRange(int range, List<User> usersSortByScore, List<User> rankings, int i) {
+        while (range > 0) {
+            if (i + range < usersSortByScore.size()) {
+                rankings.add(usersSortByScore.get(i + range));
+            }
+            if (i - range >= 0) {
+                rankings.add(usersSortByScore.get(i - range));
+            }
+            range--;
+        }
     }
 
     private List<User> getSortedScores() {
