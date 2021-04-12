@@ -46,7 +46,7 @@ public class RankingService {
         List<User> rankings = new ArrayList<>();
         int n = 0;
         while (n < i) {
-            rankings.add( usersSortByScore.get(n));
+            rankings.add(usersSortByScore.get(n));
             n++;
         }
         return rankings;
@@ -54,20 +54,17 @@ public class RankingService {
 
     public List<User> getRelativeRanking(String s) {
         String[] result = s.split(Pattern.quote("/"));
-        int points = Integer.parseInt(result[0]);
+        int position = Integer.parseInt(result[0]);
         int range = Integer.parseInt(result[1]);
         List<User> usersSortByScore = getSortedScores();
         List<User> rankings = new ArrayList<>();
 
-        for (int i = 0; i < usersSortByScore.size(); i++) {
-            if (usersSortByScore.get(i).getScore() == points) {
-                rankings.add(usersSortByScore.get(i));
-                addRankingInRange(range, usersSortByScore, rankings, i);
-                rankings.sort(Comparator.comparing(User::getScore));
-                return rankings;
-            }
-        }
+
+        addRankingInRange(range, usersSortByScore, rankings,position-1 );
+        rankings.sort(Comparator.comparing(User::getScore));
         return rankings;
+
+
     }
 
     private void addRankingInRange(int range, List<User> usersSortByScore, List<User> rankings, int i) {
@@ -80,6 +77,7 @@ public class RankingService {
             }
             range--;
         }
+        rankings.add(usersSortByScore.get(i));
     }
 
     private List<User> getSortedScores() {

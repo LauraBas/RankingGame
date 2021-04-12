@@ -45,40 +45,36 @@ class RankingServiceTest {
     @Test
     void shouldReturnRelativeRanking() {
         RankingService rankingService = new RankingService();
-        rankingService.setUserScore("123", "100");
-        rankingService.setUserScore("124", "101");
-        rankingService.setUserScore("125", "102");
-        rankingService.setUserScore("126", "99");
-        rankingService.setUserScore("127", "98");
         rankingService.setUserScore("128", "1000");
         rankingService.setUserScore("129", "980");
+        rankingService.setUserScore("125", "102");
+        rankingService.setUserScore("124", "101");
+        rankingService.setUserScore("123", "100");
+        rankingService.setUserScore("126", "99");
+        rankingService.setUserScore("127", "98");
 
         List<User> expected = new ArrayList<>();
-        expected.add(new User("127", 98));
         expected.add(new User("126", 99));
         expected.add(new User("123", 100));
         expected.add(new User("124", 101));
         expected.add(new User("125", 102));
-        assertThat(rankingService.getRelativeRanking("100/2"), is(expected));
+        expected.add(new User("129", 980));
+        assertThat(rankingService.getRelativeRanking("4/2"), is(expected));
     }
 
     @Test
     void shouldReturnRelativeRankingIfExists() {
         RankingService rankingService = new RankingService();
         rankingService.setUserScore("123", "100");
-        rankingService.setUserScore("124", "101");
-        rankingService.setUserScore("125", "102");
         rankingService.setUserScore("126", "99");
         rankingService.setUserScore("127", "98");
-        rankingService.setUserScore("128", "1000");
-        rankingService.setUserScore("129", "980");
 
         List<User> expected = new ArrayList<>();
         expected.add(new User("127", 98));
         expected.add(new User("126", 99));
         expected.add(new User("123", 100));
 
-        assertThat(rankingService.getRelativeRanking("98/2"), is(expected));
+        assertThat(rankingService.getRelativeRanking("1/2"), is(expected));
     }
 
 }
